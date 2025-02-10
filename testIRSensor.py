@@ -1,27 +1,16 @@
 import RPi.GPIO as GPIO
 import time
 
+sensor_pin = 12
 
 GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(False)
+GPIO.setup(sensor_pin, GPIO.IN)
 
-led = 10    
-s2 = 12     
-
-GPIO.setup(led, GPIO.OUT)
-GPIO.setup(s2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-
-
-def readIRSensor():
-    if GPIO.input(s2) == GPIO.LOW:
-        GPIO.output(led, GPIO.HIGH)
-    else:
-        GPIO.output(led, GPIO.LOW)
-    time.sleep(0.01)  
 try:
     while True:
-        readIRSensor()
-        
+        sensor_value = GPIO.input(sensor_pin)
+        print("Sensor reading:", sensor_value)
+        time.sleep(0.1)
+
 except KeyboardInterrupt:
     GPIO.cleanup()
-    print("Program terminated")
