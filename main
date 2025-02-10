@@ -1,4 +1,3 @@
-
 import RPi.GPIO as GPIO
 import time
 
@@ -22,7 +21,7 @@ try:
                 print("Turn right")
             if GPIO.input(SENSOR_PIN2) == GPIO.LOW:
                 print("Turn left")
-                
+
         time.sleep(0.1)
 except KeyboardInterrupt:
     GPIO.cleanup()
