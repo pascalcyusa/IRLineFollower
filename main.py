@@ -6,7 +6,7 @@ SENSOR_PIN1 = 8
 SENSOR_PIN2 = 10
 
 # Motor 1 pins (Left)
-ENA = 12  # Hardware PWM channel 0
+ENA = 12  
 IN1 = 24
 IN2 = 26
 
