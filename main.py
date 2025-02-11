@@ -41,21 +41,36 @@ motor1 = GPIO.PWM(ena1, 50)
 motor2 = GPIO.PWM(ena2, 50)
 
 def move_forward():
-    motor1.start(20)
-    motor2.start(20)
+    motor1.start(50)
+    motor2.start(50)
     GPIO.output(in1, GPIO.HIGH)
     GPIO.output(in2, GPIO.LOW)
     GPIO.output(in3, GPIO.LOW)
     GPIO.output(in4, GPIO.HIGH)
 
-# def turn_right():
+def stop():
+    GPIO.output(in1, GPIO.LOW)
+    GPIO.output(in2, GPIO.LOW)
+    GPIO.output(in3, GPIO.LOW)
+    GPIO.output(in4, GPIO.LOW)
+
+def turn_right():
+    motor1.start(50)
+    motor2.start(50)
+    GPIO.output(in1, GPIO.HIGH)
+    GPIO.output(in2, GPIO.LOW)
+    GPIO.output(in3, GPIO.HIGH)
+    GPIO.output(in4, GPIO.LOW)
 
      
-
-# def turn_left():
+def turn_left():
+    motor1.start(50)
+    motor2.start(50)
+    GPIO.output(in1, GPIO.LOW)
+    GPIO.output(in2, GPIO.HIGH)
+    GPIO.output(in3, GPIO.LOW)
+    GPIO.output(in4, GPIO.HIGH)
      
-
-
 
 try:
     while True:
@@ -70,18 +85,17 @@ try:
         # Both sensors off line - stop
         elif left_sensor == GPIO.LOW and right_sensor == GPIO.LOW:
             print("No line detected - Stopping")
-            motor1.stop()
-            motor2.stop()
+            stop()
             
-        # # Left sensor off line - turn right
-        # elif left_sensor == GPIO.LOW:
-        #     print("Turn right")
-        #     turn_right()
+        # Left sensor off line - turn right
+        elif left_sensor == GPIO.LOW:
+            print("Turn right")
+            turn_right()
             
-        # # Right sensor off line - turn left
-        # elif right_sensor == GPIO.LOW:
-        #     print("Turn left")
-        #     turn_left()
+        # Right sensor off line - turn left
+        elif right_sensor == GPIO.LOW:
+            print("Turn left")
+            turn_left()
 
         time.sleep(0.1)
        
