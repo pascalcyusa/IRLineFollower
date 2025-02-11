@@ -16,9 +16,9 @@ IN3 = 11
 IN4 = 13
 
 # Motor settings
-PWM_FREQ = 8000  # 8kHz
-BASE_SPEED = 50  # Base speed (0-100)
-TURN_SPEED = 30  # Speed for turning
+PWM_FREQ = 8000 
+BASE_SPEED = 50 
+TURN_SPEED = 30 
 
 
 # Setup GPIO
@@ -94,25 +94,28 @@ def stop():
 
 try:
     while True:
+        left_sensor = GPIO.input(SENSOR_PIN1)
+        right_sensor = GPIO.input(SENSOR_PIN2)
+        
         # Both sensors detect black line - move forward
-        if GPIO.input(SENSOR_PIN1) == GPIO.HIGH and GPIO.input(SENSOR_PIN2) == GPIO.HIGH:
+        if left_sensor == GPIO.HIGH and right_sensor == GPIO.HIGH:
             print("Black line detected - Moving forward")
             move_forward()
+        
+        # Both sensors off line - stop
+        elif left_sensor == GPIO.LOW and right_sensor == GPIO.LOW:
+            print("No line detected - Stopping")
+            stop()
             
         # Left sensor off line - turn right
-        elif GPIO.input(SENSOR_PIN1) == GPIO.LOW:
+        elif left_sensor == GPIO.LOW:
             print("Turn right")
             turn_right()
             
         # Right sensor off line - turn left
-        elif GPIO.input(SENSOR_PIN2) == GPIO.LOW:
+        elif right_sensor == GPIO.LOW:
             print("Turn left")
             turn_left()
-            
-        # Both sensors off line - stop
-        else:
-            print("No line detected - Stopping")
-            stop()
 
         time.sleep(0.1)
 
