@@ -57,23 +57,25 @@ def stop():
 def turn_right():
     motor1.start(25)
     motor2.start(25)
-    GPIO.output(in1, GPIO.LOW)  
-    GPIO.output(in2, GPIO.HIGH) 
-    GPIO.output(in3, GPIO.LOW)  
-    GPIO.output(in4, GPIO.HIGH) 
+    GPIO.output(in1, GPIO.HIGH)
+    GPIO.output(in2, GPIO.LOW)
+    GPIO.output(in3, GPIO.HIGH)
+    GPIO.output(in4, GPIO.LOW)
 
+     
 def turn_left():
     motor1.start(25)
     motor2.start(25)
-    GPIO.output(in1, GPIO.HIGH)
-    GPIO.output(in2, GPIO.LOW)  
-    GPIO.output(in3, GPIO.HIGH) 
-    GPIO.output(in4, GPIO.LOW)  
+    GPIO.output(in1, GPIO.LOW)
+    GPIO.output(in2, GPIO.HIGH)
+    GPIO.output(in3, GPIO.LOW)
+    GPIO.output(in4, GPIO.HIGH)
      
+
 try:
     while True:
-        left_sensor = GPIO.input(SENSOR_PIN1)
-        right_sensor = GPIO.input(SENSOR_PIN2)
+        left_sensor = GPIO.input(SENSOR_PIN2)
+        right_sensor = GPIO.input(SENSOR_PIN1)
         
         # Both sensors detect black line - move forward
         if left_sensor == GPIO.HIGH and right_sensor == GPIO.HIGH:
