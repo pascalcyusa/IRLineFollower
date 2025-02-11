@@ -1,6 +1,8 @@
 import RPi.GPIO as GPIO
 import time
 
+GPIO.setmode(GPIO.BOARD)
+
 # IR Sensor pins
 SENSOR_PIN1 = 8 
 SENSOR_PIN2 = 10
@@ -13,8 +15,6 @@ in2 = 26
 ena2 = 32
 in3 = 11
 in4 = 13
-
-GPIO.setmode(GPIO.BOARD)
 
 # Setup sensor pins
 GPIO.setup(SENSOR_PIN1, GPIO.IN)
@@ -41,8 +41,8 @@ motor1 = GPIO.PWM(ena1, 50)
 motor2 = GPIO.PWM(ena2, 50)
 
 def move_forward():
-    motor1.start(50)
-    motor2.start(50)
+    motor1.start(25)
+    motor2.start(25)
     GPIO.output(in1, GPIO.HIGH)
     GPIO.output(in2, GPIO.LOW)
     GPIO.output(in3, GPIO.LOW)
@@ -55,23 +55,21 @@ def stop():
     GPIO.output(in4, GPIO.LOW)
 
 def turn_right():
-    motor1.start(50)
-    motor2.start(50)
-    GPIO.output(in1, GPIO.HIGH)
-    GPIO.output(in2, GPIO.LOW)
-    GPIO.output(in3, GPIO.HIGH)
-    GPIO.output(in4, GPIO.LOW)
+    motor1.start(25)
+    motor2.start(25)
+    GPIO.output(in1, GPIO.LOW)  
+    GPIO.output(in2, GPIO.HIGH) 
+    GPIO.output(in3, GPIO.LOW)  
+    GPIO.output(in4, GPIO.HIGH) 
 
-     
 def turn_left():
-    motor1.start(50)
-    motor2.start(50)
-    GPIO.output(in1, GPIO.LOW)
-    GPIO.output(in2, GPIO.HIGH)
-    GPIO.output(in3, GPIO.LOW)
-    GPIO.output(in4, GPIO.HIGH)
+    motor1.start(25)
+    motor2.start(25)
+    GPIO.output(in1, GPIO.HIGH)
+    GPIO.output(in2, GPIO.LOW)  
+    GPIO.output(in3, GPIO.HIGH) 
+    GPIO.output(in4, GPIO.LOW)  
      
-
 try:
     while True:
         left_sensor = GPIO.input(SENSOR_PIN1)
