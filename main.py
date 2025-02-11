@@ -42,7 +42,14 @@ GPIO.output(IN2, GPIO.LOW)
 GPIO.output(IN3, GPIO.LOW)
 GPIO.output(IN4, GPIO.LOW)
 
-# No need for PWM setup - just use hardware PWM directly
+# Setup motor pins and PWM
+GPIO.setup(ENA, GPIO.OUT)
+GPIO.setup(ENB, GPIO.OUT)
+pwm_left = GPIO.PWM(ENA, PWM_FREQ)
+pwm_right = GPIO.PWM(ENB, PWM_FREQ)
+pwm_left.start(0)
+pwm_right.start(0)
+
 def move_forward():
     # Left motor forward
     GPIO.output(IN1, GPIO.HIGH)
@@ -50,9 +57,9 @@ def move_forward():
     # Right motor forward
     GPIO.output(IN3, GPIO.HIGH)
     GPIO.output(IN4, GPIO.LOW)
-    # Set speeds using hardware PWM
-    GPIO.set_PWM_dutycycle(ENA, BASE_SPEED * 2.55)  # Convert 0-100 to 0-255
-    GPIO.set_PWM_dutycycle(ENB, BASE_SPEED * 2.55)
+    # Set speeds using PWM
+    pwm_left.ChangeDutyCycle(BASE_SPEED)
+    pwm_right.ChangeDutyCycle(BASE_SPEED)
 
 def turn_left():
     # Left motor slower
@@ -61,9 +68,9 @@ def turn_left():
     # Right motor faster
     GPIO.output(IN3, GPIO.HIGH)
     GPIO.output(IN4, GPIO.LOW)
-    # Set speeds using hardware PWM
-    GPIO.set_PWM_dutycycle(ENA, TURN_SPEED * 2.55)  # Convert 0-100 to 0-255
-    GPIO.set_PWM_dutycycle(ENB, BASE_SPEED * 2.55)
+    # Set speeds using PWM
+    pwm_left.ChangeDutyCycle(TURN_SPEED)
+    pwm_right.ChangeDutyCycle(BASE_SPEED)
 
 def turn_right():
     # Left motor faster
@@ -72,9 +79,9 @@ def turn_right():
     # Right motor slower
     GPIO.output(IN3, GPIO.HIGH)
     GPIO.output(IN4, GPIO.LOW)
-    # Set speeds using hardware PWM
-    GPIO.set_PWM_dutycycle(ENA, BASE_SPEED * 2.55)  # Convert 0-100 to 0-255
-    GPIO.set_PWM_dutycycle(ENB, TURN_SPEED * 2.55)
+    # Set speeds using PWM
+    pwm_left.ChangeDutyCycle(BASE_SPEED)
+    pwm_right.ChangeDutyCycle(TURN_SPEED)
 
 def stop():
     # Stop both motors
@@ -82,8 +89,8 @@ def stop():
     GPIO.output(IN2, GPIO.LOW)
     GPIO.output(IN3, GPIO.LOW)
     GPIO.output(IN4, GPIO.LOW)
-    GPIO.set_PWM_dutycycle(ENA, 0)
-    GPIO.set_PWM_dutycycle(ENB, 0)
+    pwm_left.ChangeDutyCycle(0)
+    pwm_right.ChangeDutyCycle(0)
 
 try:
     while True:
